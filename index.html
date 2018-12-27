@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lotto - losowanie 6 liczb</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        font-family: sans-serif;
+        color: white;
+        background-color: white;
+      }
+
+      .wrapper {
+        position: relative;
+        display: block;
+        margin-top: 10vh;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50vw;
+        height: 60vh;
+        background-color: rgb(24, 24, 32);
+        border-radius: 5%;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.39);
+      }
+
+      h1 {
+        text-align: center;
+        padding: 5vh;
+      }
+
+      .check {
+        position: absolute;
+        left: 50%;
+        bottom: 5%;
+        transform: translateX(-50%);
+        padding: 3vh 5vh;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+        background-color: rgb(199, 63, 0);
+      }
+      .reset {
+        position: absolute;
+        bottom: 10%;
+        right: 5%;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+        background-color: rgb(199, 63, 0);
+      }
+
+      .balls {
+        position: absolute;
+        width: 23%;
+        bottom: 0;
+        right: 0;
+      }
+
+      .lotto {
+        position: absolute;
+        left: 10%;
+        top: 40%;
+      }
+
+      .resultNumbers {
+        text-align: center;
+      }
+
+      span {
+        display: inline-block;
+        text-align: center;
+        line-height: 60px;
+        width: 60px;
+        height: 60px;
+        background-color: yellow;
+        border-radius: 50%;
+        color: black;
+        font-size: 40px;
+        font-weight: bold;
+      }
+
+      @media (max-width: 360px) {
+        .wrapper {
+          position: relative;
+          display: block;
+          margin-top: 5vh;
+          margin-left: auto;
+          margin-right: auto;
+          width: 70vw;
+          height: 80vh;
+          background-color: rgb(24, 24, 32);
+          border-radius: 5%;
+          box-shadow: 0 10px 10px rgba(0, 0, 0, 0.39);
+        }
+
+        .balls {
+          width: 30%;
+        }
+
+        span {
+          margin-right: 3%;
+          line-height: 30px;
+          width: 30px;
+          height: 30px;
+          font-size: 25px;
+        }
+
+        .resultNumbers {
+          margin-top: 30%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h1>Wylosuj 6 liczb</h1>
+      <div class="resultNumbers"></div>
+      <button class="check">Kliknij, aby wylosować liczby</button>
+      <button class="reset">Reset</button>
+    </div>
+    <img src="pileczki-lotto.jpg" class="balls" />
+
+    <script>
+      const prevNumbers = [];
+
+      const result = function() {
+        if (prevNumbers.length === 6) return;
+
+        const numbers = Math.floor(Math.random() * 49 + 1);
+        for (let i = 0; i < prevNumbers.length; i++) {
+          if (numbers === prevNumbers[i]) {
+            return result();
+          }
+        }
+        const div = document.querySelector(".resultNumbers");
+        const span = document.createElement("span");
+        span.textContent = numbers;
+        div.appendChild(span);
+        prevNumbers.push(numbers);
+        const reset = document.querySelector(".reset");
+        reset.addEventListener("click", function() {
+          prevNumbers.length = 0;
+          div.textContent = "";
+        });
+      };
+
+      const button = document.querySelector(".check");
+      button.addEventListener("click", result);
+    </script>
+  </body>
+</html>
